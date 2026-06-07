@@ -13,6 +13,36 @@ const animatedElements = document.querySelectorAll('[data-animate]');
 const contactForm = document.querySelector('[data-contact-form]');
 const contactSuccessMessage = document.querySelector('[data-contact-success-message]');
 const quoteDetailsField = document.querySelector('textarea[name="quote-details"]');
+const whatsappNumber = '971502071744';
+
+function createWhatsAppChat() {
+  if (document.querySelector('[data-whatsapp-chat]')) {
+    return;
+  }
+
+  const message = 'Hello AA Facilities Management Services, I would like to make an enquiry.';
+
+  const chatLink = document.createElement('a');
+  chatLink.className = 'whatsapp-chat';
+  chatLink.href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+  chatLink.target = '_blank';
+  chatLink.rel = 'noopener noreferrer';
+  chatLink.setAttribute('aria-label', 'Chat with A A Facilities Management Services on WhatsApp');
+  chatLink.setAttribute('data-whatsapp-chat', '');
+  chatLink.innerHTML = `
+    <span class="whatsapp-chat-icon" aria-hidden="true">
+      <svg viewBox="0 0 32 32" focusable="false">
+        <path d="M16 3.5c-6.9 0-12.5 5.3-12.5 11.9 0 2.2.7 4.4 1.9 6.2L4 28.5l7.2-1.8c1.5.6 3.1.9 4.8.9 6.9 0 12.5-5.3 12.5-11.9S22.9 3.5 16 3.5Zm0 21.9c-1.5 0-2.9-.3-4.2-1l-.4-.2-4.2 1 1-4-.3-.4c-1.3-1.6-2-3.5-2-5.5 0-5.3 4.5-9.6 10.1-9.6s10.1 4.3 10.1 9.6-4.5 10.1-10.1 10.1Zm5.5-7.2c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.2-1.3-.5-2.5-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.7.1-.1.3-.3.4-.5.2-.2.2-.3.3-.5.1-.2.1-.4 0-.5-.1-.2-.7-1.7-1-2.3-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1.1 1.1-1.1 2.6s1.1 3 1.3 3.2c.2.3 2.2 3.4 5.3 4.7.7.3 1.3.5 1.8.6.8.2 1.4.2 2 .1.6-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.1-.3-.2-.6-.4Z" />
+      </svg>
+    </span>
+    <span class="whatsapp-chat-copy">
+      <strong>Chat on WhatsApp</strong>
+      <small>WhatsApp Business</small>
+    </span>
+  `;
+
+  document.body.appendChild(chatLink);
+}
 
 function placeCaretAtStart(field) {
   if (!field || typeof field.setSelectionRange !== 'function') {
@@ -73,6 +103,8 @@ function closeQuoteModal() {
     successMessage.classList.remove('show');
   }
 }
+
+createWhatsAppChat();
 
 if (menuToggle && mobileMenu) {
   menuToggle.addEventListener('click', () => {
