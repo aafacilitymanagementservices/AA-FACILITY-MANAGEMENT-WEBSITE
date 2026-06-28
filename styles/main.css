@@ -888,7 +888,7 @@ textarea {
   border-radius: 32px;
   background:
     linear-gradient(120deg, var(--navy-900) 0%, var(--navy-900) 48%, rgba(0, 124, 120, 0.92) 48%, rgba(0, 124, 120, 0.92) 100%),
-    url('../assets/visuals/office.svg');
+    url('../assets/visuals/office.webp');
   box-shadow: var(--shadow-soft);
 }
 
@@ -1281,7 +1281,7 @@ textarea {
   min-height: 250px;
   background:
     linear-gradient(135deg, rgba(6, 26, 52, 0.72), rgba(0, 124, 120, 0.66)),
-    url('../assets/visuals/office.svg');
+    url('../assets/visuals/office.webp');
   background-position: center;
   background-size: cover;
 }
