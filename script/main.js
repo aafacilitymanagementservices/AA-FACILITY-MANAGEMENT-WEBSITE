@@ -15,6 +15,43 @@ const contactSuccessMessage = document.querySelector('[data-contact-success-mess
 const quoteDetailsField = document.querySelector('textarea[name="quote-details"]');
 const whatsappNumber = '971502071744';
 
+function prepareProtectedForm(form) {
+  if (!form) {
+    return;
+  }
+
+  let honeypot = form.querySelector('input[name="website"]');
+  let startedAt = form.querySelector('input[name="form-started-at"]');
+
+  if (!honeypot) {
+    honeypot = document.createElement('input');
+    honeypot.type = 'text';
+    honeypot.name = 'website';
+    honeypot.autocomplete = 'off';
+    honeypot.tabIndex = -1;
+    honeypot.setAttribute('aria-hidden', 'true');
+    honeypot.style.display = 'none';
+    form.appendChild(honeypot);
+  }
+
+  if (!startedAt) {
+    startedAt = document.createElement('input');
+    startedAt.type = 'hidden';
+    startedAt.name = 'form-started-at';
+    form.appendChild(startedAt);
+  }
+
+  refreshFormStartedAt(form);
+}
+
+function refreshFormStartedAt(form) {
+  const startedAt = form?.querySelector('input[name="form-started-at"]');
+
+  if (startedAt) {
+    startedAt.value = String(Date.now());
+  }
+}
+
 function createWhatsAppChat() {
   if (document.querySelector('[data-whatsapp-chat]')) {
     return;
@@ -78,6 +115,7 @@ function openQuoteModal() {
   closeMobileMenu();
   quoteModal.classList.add('open');
   body.classList.add('modal-open');
+  refreshFormStartedAt(quoteForm);
 
   const firstInput = quoteModal.querySelector('input, select, textarea, button');
 
@@ -97,6 +135,7 @@ function closeQuoteModal() {
   if (quoteForm) {
     quoteForm.style.display = '';
     quoteForm.reset();
+    refreshFormStartedAt(quoteForm);
   }
 
   if (successMessage) {
@@ -105,6 +144,8 @@ function closeQuoteModal() {
 }
 
 createWhatsAppChat();
+prepareProtectedForm(quoteForm);
+prepareProtectedForm(contactForm);
 
 if (menuToggle && mobileMenu) {
   menuToggle.addEventListener('click', () => {
@@ -197,6 +238,7 @@ if (quoteForm && successMessage) {
         quoteForm.style.display = 'none';
         successMessage.classList.add('show');
         quoteForm.reset();
+        refreshFormStartedAt(quoteForm);
       } else {
         console.error('Quote form submission failed:', result);
       }
@@ -235,6 +277,7 @@ if (contactForm && contactSuccessMessage) {
         contactForm.style.display = 'none';
         contactSuccessMessage.classList.add('show');
         contactForm.reset();
+        refreshFormStartedAt(contactForm);
       } else {
         console.error('Contact form submission failed:', result);
       }
